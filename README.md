@@ -1,3 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/15014c1a-14b1-4e6f-a6d3-71c93830797f/deploy-status)](https://uttyler-degree-vis.netlify.app/)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
