@@ -1,16 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+//mport logo from './logo.svg';
 import './App.css';
+import utt from './Images/ut tyler background.png';
+import uttLogo from './Images/utt logo.png';
+import Overlay from 'react-image-overlay';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+      <Overlay
+         url='https://www.uttyler.edu/images/shared/wallpaper/2560widescreen/tower.jpg' // required
+         Image overlayUrl= 'utt logo.png' // required
+         imageHeight={1000}
+         imageWidth = {1000}
+         position={'center'}
+         overlayWidth={50}
+         overlayHeight={50}
+         overlayPadding={10}
+         watermark={false}
+        />
+
+        
         <p>
           Edit <code>src/App.js</code> and save to reload.
-			I am editting. Hello
-      Whats up ?
+		
         </p>
         <a
           className="App-link"
