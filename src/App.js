@@ -1,8 +1,7 @@
 import React from 'react';
 //mport logo from './logo.svg';
 import './App.css';
-import utt from './Images/ut tyler background.png';
-import uttLogo from './Images/utt logo.png';
+
 import Overlay from 'react-image-overlay';
 
 function App() {
