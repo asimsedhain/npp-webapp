@@ -2,7 +2,7 @@ import React from "react";
 import tower from "../assets/tower.jpg";
 import logo from "../assets/logo_full_white.png";
 import styled from "styled-components";
-
+//test
 function LandingPage() {
 	return (
 		<>
