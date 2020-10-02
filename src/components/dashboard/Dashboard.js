@@ -1,24 +1,44 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import "./Dashboard.css"
+
+import styled from "styled-components";
+
 function Dashboard() {
-	return (
-		
-		<Container>
-			<h1> </h1>
-			<div class="header">
-  <h1>My Courses Plan</h1>
-  <p>Total Credit Hours: </p>
-</div>
-		<div
-      style={{
-        backgroundColor: '#C4C4C4',
-        width: '1232px',
-        height: '900px'
-      }}
-    />
-		</Container>
-	);
+  return (
+
+    <Container>
+
+      <Header>
+        <ContainerHeader>My Courses Plan</ContainerHeader>
+        <ContainerTail>Total Credit Hours:</ContainerTail>
+      </Header>
+      <div
+        style={{
+          backgroundColor: '#C4C4C4',
+          width: '1232px',
+          height: '900px'
+        }}
+      />
+    </Container>
+  );
 }
+
+
+const ContainerHeader = styled.h1`
+text-align: start;
+margin: 0.8rem ;
+`;
+
+const ContainerTail = styled.p`
+text-align: right;
+margin: 1rem ;
+`;
+
+const Header = styled.div`
+padding: 1px ; 
+background: #092d74;
+color: white;
+font-size: 15px;
+`;
 
 export default Dashboard;
