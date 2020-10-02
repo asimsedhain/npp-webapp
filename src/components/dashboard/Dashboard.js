@@ -5,21 +5,21 @@ import RemoveIcon from "@material-ui/icons/Remove";
 
 function Dashboard() {
 	return (
-		<div classname="Dashboard">
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" />
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" />
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" />
+		<div >
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Hello")}} status={"Enrolled"}/>
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Bye")}} status={"Completed"}/>
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Hello again")}} status={"Planned"}/>
 		</div>
 	);
 }
-const DraggableCard = ({ text }) => {
+const DraggableCard = ({ text, onClickFunction}) => {
 	return (
 
 		<Card
 			style={{ width: "22rem", backgroundColor: "#FEFAFA", color: "blue", height: "35px", margin: 10 }}
 		>
-			<Typography variant="subtitle">{text}
-				<Button onClick={()=>console.log("delete")}>
+			<Typography variant="subtitle">{"B"}{text}
+				<Button onClick={()=>onClickFunction()}>
   <RemoveIcon></RemoveIcon></Button>
 			</Typography>
 		</Card>
