@@ -1,44 +1,54 @@
-import React from "react";
-//import Container from "@material-ui/core/Container";
-import styled from "styled-components";
+import React, { useState } from "react";
 import NavBar from "./NavBar";
+import {
+	Container,
+	ViewContainer,
+	ViewHeader,
+	ListViewTypography,
+	ListViewHeaderAccent,
+	ListViewCardContainer,
+	CheckButton,
+	AddButton,
+	GraphButton,
+} from "./DashboardComponents";
 
 function Dashboard() {
-  return (
-
-    <NavBar>
-
-      <Header>
-        <ContainerHeader>My Courses Plan</ContainerHeader>
-        <ContainerTail>Total Credit Hours:</ContainerTail>
-      </Header>
-      <div
-        style={{
-          backgroundColor: '#C4C4C4',
-          width: '1232px',
-          height: '900px'
-        }}
-      />
-    </NavBar>
-  );
+	const [isOpen, setIsOpen] = useState(false);
+	return (
+		<>
+			<NavBar />
+			<Container>
+				<ViewContainer isOpen={isOpen}>
+					<ViewHeader>
+						<ListViewTypography variant="h4">
+							My Course Plan
+						</ListViewTypography>
+						<ListViewTypography>
+							Total Credits:{`${10}`}
+						</ListViewTypography>
+					</ViewHeader>
+					<ListViewHeaderAccent />
+					<ListViewCardContainer></ListViewCardContainer>
+				</ViewContainer>
+				<ViewContainer span="2" light isOpen={isOpen}>
+					<ViewHeader dark>
+						<ListViewTypography variant="h4">
+							Offered Courses
+						</ListViewTypography>
+					</ViewHeader>
+					<ListViewCardContainer></ListViewCardContainer>
+				</ViewContainer>
+				{isOpen ? (
+					<CheckButton onClick={() => setIsOpen(!isOpen)} />
+				) : (
+					<>
+						<AddButton onClick={() => setIsOpen(!isOpen)} />
+						<GraphButton />
+					</>
+				)}
+			</Container>
+		</>
+	);
 }
-
-
-const ContainerHeader = styled.h1`
-text-align: start;
-margin: 0.8rem ;
-`;
-
-const ContainerTail = styled.p`
-text-align: right;
-margin: 1rem ;
-`;
-
-const Header = styled.div`
-padding: 1px ; 
-background: #092d74;
-color: white;
-font-size: 15px;
-`;
 
 export default Dashboard;
