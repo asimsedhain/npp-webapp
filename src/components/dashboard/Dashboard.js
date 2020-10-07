@@ -1,30 +1,28 @@
 import React from "react";
-import { Card, Button, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/Remove";
-
+import { CardBorder, StyledCard } from "./StyledDashboardComponents";
 
 function Dashboard() {
 	return (
-		<div >
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Hello")}} status={"Enrolled"}/>
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Bye")}} status={"Completed"}/>
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction = {()=>{console.log("Hello again")}} status={"Planned"}/>
+		<div>
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello") }} bgColor="orange"/>
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Bye") }} bgColor="green"/>
+			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello again") }} bgColor="gray"/>
 		</div>
 	);
 }
-const DraggableCard = ({ text, onClickFunction}) => {
+
+const DraggableCard = ({ text, onClickFunction, bgColor }) => {
 	return (
-
-		<Card
-			style={{ width: "22rem", backgroundColor: "#FEFAFA", color: "blue", height: "35px", margin: 10 }}
-		>
-			<Typography variant="subtitle">{"B"}{text}
-				<Button onClick={()=>onClickFunction()}>
-  <RemoveIcon></RemoveIcon></Button>
-			</Typography>
-		</Card>
-
-
+		<StyledCard>
+			<CardBorder bgColor={bgColor}>
+				<Typography variant="subtitle"> {text}
+					<Button onClick={() => onClickFunction()}>
+						<RemoveIcon> </RemoveIcon></Button>
+				</Typography>
+			</CardBorder>
+		</StyledCard>
 	);
 };
 
