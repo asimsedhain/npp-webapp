@@ -1,9 +1,3 @@
-*   [33m179ade2[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Merge pull request #5 from asimsedhain/login
-[31m|[m[32m\[m  
-[31m|[m *   [33m2a105f3[m[33m ([m[1;31morigin/login[m[33m)[m Merge branch 'master' into login
-[31m|[m [33m|[m[31m\[m  
-[31m|[m [33m|[m[31m/[m  
-[31m|[m[31m/[m[33m|[m   
 * [33m|[m   [33m3da36bd[m Merge pull request #4 from asimsedhain/NewBranch
 [35m|[m[36m\[m [33m\[m  
 [35m|[m * [33m\[m   [33md003601[m[33m ([m[1;31morigin/NewBranch[m[33m)[m Merge branch 'master' into NewBranch

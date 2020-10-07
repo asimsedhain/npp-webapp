@@ -6,14 +6,14 @@ import { CardBorder, StyledCard } from "./StyledDashboardComponents";
 function Dashboard() {
 	return (
 		<div>
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello") }} bgColor="orange"/>
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Bye") }} bgColor="green"/>
-			<DraggableCard text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello again") }} bgColor="gray"/>
+			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello") }} bgColor="orange"/>
+			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Bye") }} bgColor="green"/>
+			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello again") }} bgColor="gray"/>
 		</div>
 	);
 }
 
-const DraggableCard = ({ text, onClickFunction, bgColor }) => {
+const CardCourse = ({ text, onClickFunction, bgColor }) => {
 	return (
 		<StyledCard>
 			<CardBorder bgColor={bgColor}>
