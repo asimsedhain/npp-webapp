@@ -25,7 +25,7 @@ const ViewContainer = styled.div`
 
 const ViewHeader = styled.div`
 	width: 100%;
-	height: 65px;
+	height: 80px;
 	background: #092d74;
 	background: ${(props) => props.dark && "#353842"};
 `;
@@ -37,6 +37,18 @@ const ListViewHeaderAccent = styled.div`
 
 const ListViewTypography = styled(Typography)`
 	color: white;
+	text-align: center;
+	padding: 0.5px 5px;
+	padding-top: 2px;
+`;
+
+const ResponsiveListViewTypography = styled(ListViewTypography)`
+	@media (max-width:700px) {  
+	h4 {
+		font-size: 0.9rem;
+		line-height: 10px;
+	} 
+  }
 `;
 
 const ListViewCardContainer = styled.div`
@@ -83,7 +95,8 @@ export {
 	GraphButton,
 	CheckButton,
 	AddButton,
-	ViewHeader, 
+	ViewHeader,
 	ViewContainer,
-	Container	
+	Container,
+	ResponsiveListViewTypography,
 };

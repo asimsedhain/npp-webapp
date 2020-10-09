@@ -45,6 +45,13 @@ const LogoutButton = styled.button`
     font-size: 28px;
     line-height: 21px;
     text-align: center;
+    @media only screen and (max-width: 700px) {
+        font-size: 1.1rem;
+        right: 10px;
+        top: 50px;
+        width: 80px;
+        height: 30px;
+	}
 `;
 
 export default NavBar

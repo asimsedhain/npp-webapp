@@ -1,7 +1,7 @@
 import React from "react";
 import tower from "../assets/tower.jpg";
 import logo from "../assets/logo_full_white.png";
-import {LandingPageImage, LogoImage, LogoText, LoginButton} from "./LandingPageComponents"
+import { LandingPageImage, LogoImage, LogoText, LoginButton } from "./LandingPageComponents"
 
 
 const msClient = {
@@ -23,7 +23,7 @@ function LandingPage() {
 			<LogoText>Degree Visualizer</LogoText>
 			<LoginButton onClick={redirect}>Login</LoginButton>
 		</>
-		
+
 	);
 }
 
