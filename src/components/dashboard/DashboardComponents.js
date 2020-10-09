@@ -46,7 +46,7 @@ const ResponsiveListViewTypography = styled(ListViewTypography)`
 	@media (max-width:700px) {  
 	h4 {
 		font-size: 0.9rem;
-		line-height: 10px;
+		line-height: 15px;
 	} 
   }
 `;
