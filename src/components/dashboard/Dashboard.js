@@ -1,13 +1,53 @@
-import React from "react";
-import { CardCourse } from "./CardCourseComponents";
+import React, { useState } from "react";
+import NavBar from "./NavBar";
+import {
+	Container,
+	ViewContainer,
+	ViewHeader,
+	ListViewTypography,
+	ListViewHeaderAccent,
+	ListViewCardContainer,
+	CheckButton,
+	AddButton,
+	GraphButton,
+} from "./DashboardComponents";
 
 function Dashboard() {
+	const [isOpen, setIsOpen] = useState(false);
 	return (
-		<div>
-			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello") }} bgColor="orange" />
-			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Bye") }} bgColor="green" />
-			<CardCourse text="COSC 4336: SOFTWARE DEVELOPMENT" onClickFunction={() => { console.log("Hello again") }} bgColor="gray" />
-		</div>
+		<>
+			<NavBar />
+			<Container>
+				<ViewContainer isOpen={isOpen}>
+					<ViewHeader>
+						<ListViewTypography variant="h4">
+							My Course Plan
+						</ListViewTypography>
+						<ListViewTypography>
+							Total Credits:{`${10}`}
+						</ListViewTypography>
+					</ViewHeader>
+					<ListViewHeaderAccent />
+					<ListViewCardContainer></ListViewCardContainer>
+				</ViewContainer>
+				<ViewContainer span="2" light isOpen={isOpen}>
+					<ViewHeader dark>
+						<ListViewTypography variant="h4">
+							Offered Courses
+						</ListViewTypography>
+					</ViewHeader>
+					<ListViewCardContainer></ListViewCardContainer>
+				</ViewContainer>
+				{isOpen ? (
+					<CheckButton onClick={() => setIsOpen(!isOpen)} />
+				) : (
+					<>
+						<AddButton onClick={() => setIsOpen(!isOpen)} />
+						<GraphButton />
+					</>
+				)}
+			</Container>
+		</>
 	);
 }
 
