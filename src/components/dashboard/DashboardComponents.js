@@ -12,6 +12,9 @@ const Container = styled.div`
 	height: calc(100vh - 150px);
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	@media (max-width:600px) {  
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+	  }
 `;
 const ViewContainer = styled.div`
 	width: 100%;
@@ -21,17 +24,18 @@ const ViewContainer = styled.div`
 
 	background: ${(props) => props.light && "#E1E1E1"};
 	display: ${(props) => !props.isOpen && props.span && "none"};
+
 `;
 
 const ViewHeader = styled.div`
 	width: 100%;
-	height: 80px;
+	height: 75px;
 	background: #092d74;
 	background: ${(props) => props.dark && "#353842"};
 `;
 
 const ListViewHeaderAccent = styled.div`
-	height: 6px;
+	height: 8px;
 	background: #e55204;
 `;
 
