@@ -10,11 +10,9 @@ const CardBorder = styled.div`
 `;
 
 const StyledCard = styled(Card)`
-      width: 23.5rem;
       background: #FEFAFA;
       color: #0B45B8;
       height: 35px;
-      margin: 10px;		
 `;
 
 export { CardBorder, StyledCard };

@@ -21,6 +21,7 @@ const ViewContainer = styled.div`
 
 	background: ${(props) => props.light && "#E1E1E1"};
 	display: ${(props) => !props.isOpen && props.span && "none"};
+	overflow-y: ${(props) => !props.overflow && "hidden"};
 `;
 
 const ViewHeader = styled.div`
@@ -40,7 +41,24 @@ const ListViewTypography = styled(Typography)`
 `;
 
 const ListViewCardContainer = styled.div`
-	height: 100%;
+	height: calc(100% - 91px);
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	//grid-template-rows: min-content;
+	grid-gap: 20px;
+	padding: 10px;
+	overflow-y: auto;
+	::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+	::-webkit-scrollbar-track {
+		background-color: #ccc;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: #aaa;
+		border-radius: 4px;
+	}
 `;
 
 const AddButton = styled(AddCircleIcon)`
@@ -83,7 +101,7 @@ export {
 	GraphButton,
 	CheckButton,
 	AddButton,
-	ViewHeader, 
+	ViewHeader,
 	ViewContainer,
-	Container	
+	Container,
 };
