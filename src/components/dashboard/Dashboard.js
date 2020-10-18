@@ -81,6 +81,7 @@ function Dashboard() {
 							<CardCourse
 								key={i}
 								accentColor={"red"}
+								addIcon
 								onClickFunction={() => {
 									const slice = courses.splice(i, 1);
 									const newSlice = [].concat(
@@ -91,10 +92,7 @@ function Dashboard() {
 									setCourses(courses);
 									setDegreePlan(newSlice);
 									setTotalCredit(
-										newSlice.reduce(
-											totalCreditsReducer,
-											0
-										)
+										newSlice.reduce(totalCreditsReducer, 0)
 									);
 								}}
 							>{`${data.id}`}</CardCourse>
