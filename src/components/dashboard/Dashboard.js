@@ -16,11 +16,12 @@ import { CardCourse } from "./CardCourseComponents";
 function Dashboard() {
 	const [degreePlan, setDegreePlan] = useState([]);
 	const [courses, setCourses] = useState([]);
+	const [totalCredit, setTotalCredit] = useState(0);
 
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		fetch("http://localhost:5000/courses/COSC")
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/COSC`)
 			.then(async (value) => {
 				return value.json();
 			})
@@ -28,26 +29,29 @@ function Dashboard() {
 				data.sort(compareCourse);
 				setCourses(data);
 			});
+
+		setTotalCredit(degreePlan.reduce(totalCreditsReducer, 0));
 	}, []);
+	//
 
 	return (
 		<>
 			<NavBar />
 			<Container>
-				<ViewContainer isOpen={isOpen} overflow={false}>
+				<ViewContainer isOpen={isOpen}>
 					<ViewHeader>
 						<ListViewTypography variant="h4">
 							My Course Plan
 						</ListViewTypography>
 						<ListViewTypography>
-							Total Credits:{`${10}`}
+							Total Credits:{`${totalCredit}`}
 						</ListViewTypography>
 					</ViewHeader>
 					<ListViewHeaderAccent />
 					<ListViewCardContainer>
 						{degreePlan.map((data, i) => (
 							<CardCourse
-								id={i}
+								key={i}
 								accentColor={"green"}
 								onClickFunction={() => {
 									const slice = degreePlan.splice(i, 1);
@@ -55,12 +59,18 @@ function Dashboard() {
 									newSlice.sort(compareCourse);
 									setCourses(newSlice);
 									setDegreePlan(degreePlan);
+									setTotalCredit(
+										degreePlan.reduce(
+											totalCreditsReducer,
+											0
+										)
+									);
 								}}
 							>{`${data.id}`}</CardCourse>
 						))}
 					</ListViewCardContainer>
 				</ViewContainer>
-				<ViewContainer span="2" light isOpen={isOpen} overflow={false}>
+				<ViewContainer span="2" light isOpen={isOpen}>
 					<ViewHeader dark>
 						<ListViewTypography variant="h4">
 							Offered Courses
@@ -69,7 +79,7 @@ function Dashboard() {
 					<ListViewCardContainer>
 						{courses.map((data, i) => (
 							<CardCourse
-								id={i}
+								key={i}
 								accentColor={"red"}
 								onClickFunction={() => {
 									const slice = courses.splice(i, 1);
@@ -80,6 +90,12 @@ function Dashboard() {
 									newSlice.sort(compareCourse);
 									setCourses(courses);
 									setDegreePlan(newSlice);
+									setTotalCredit(
+										newSlice.reduce(
+											totalCreditsReducer,
+											0
+										)
+									);
 								}}
 							>{`${data.id}`}</CardCourse>
 						))}
@@ -106,6 +122,12 @@ function compareCourse(a, b) {
 		return 1;
 	}
 	return 0;
+}
+
+function totalCreditsReducer(accumulator, current) {
+	const credits = Math.floor(current.courseNumber / 100) % 10;
+
+	return accumulator + credits;
 }
 
 export default Dashboard;
