@@ -2,8 +2,8 @@ import { Typography } from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-
 import styled from "styled-components";
+
 const Container = styled.div`
 	background: #c4c4c4;
 	width: 95vw;
@@ -13,6 +13,7 @@ const Container = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 `;
+
 const ViewContainer = styled.div`
 	width: 100%;
 	height: 100%;
@@ -21,6 +22,7 @@ const ViewContainer = styled.div`
 
 	background: ${(props) => props.light && "#E1E1E1"};
 	display: ${(props) => !props.isOpen && props.span && "none"};
+
 `;
 
 const ViewHeader = styled.div`
@@ -73,7 +75,7 @@ const GraphButton = styled(DonutLargeIcon)`
 	margin: 0px;
 	position: absolute;
 	right: 40px;
-	bottom: 150px;
+	bottom: 140px;
 `;
 
 export {
@@ -85,5 +87,5 @@ export {
 	AddButton,
 	ViewHeader, 
 	ViewContainer,
-	Container	
+	Container,
 };
