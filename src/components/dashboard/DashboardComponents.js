@@ -14,6 +14,8 @@ const Container = styled.div`
 	grid-template-columns: repeat(3, 1fr);
 	@media (max-width:600px) {  
 		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+		margin-left: 10px;
+		margin-right: 10px;
 	  }
 `;
 const ViewContainer = styled.div`
@@ -29,7 +31,7 @@ const ViewContainer = styled.div`
 
 const ViewHeader = styled.div`
 	width: 100%;
-	height: 75px;
+	height: 70px;
 	background: #092d74;
 	background: ${(props) => props.dark && "#353842"};
 `;
@@ -49,8 +51,8 @@ const ListViewTypography = styled(Typography)`
 const ResponsiveListViewTypography = styled(ListViewTypography)`
 	@media (max-width:700px) {  
 	h4 {
-		font-size: 0.9rem;
-		line-height: 15px;
+		font-size: 1.5rem;
+		line-height: 30px;
 	} 
   }
 `;
