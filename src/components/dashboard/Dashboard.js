@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import NavBar from "./NavBar";
-import {
-	Container,
-	ViewContainer,
-	ViewHeader,
-	ListViewTypography,
-	ListViewHeaderAccent,
-	ListViewCardContainer,
-	CheckButton,
-	AddButton,
-	GraphButton,
-} from "./DashboardComponents";
-import { CardCourse, CourseCard } from "./CardCourseComponents";
-import data from "./data"
+import { Container } from "./DashboardComponents";
+import DraggableCourseCard from "./DraggableCourseCard";
+import DroppableCourseList from "./DroppableCourseList";
+import data from "./data";
 
 function Dashboard() {
 	const [degreePlan, setDegreePlan] = useState([]);
@@ -21,6 +13,12 @@ function Dashboard() {
 
 	const [isOpen, setIsOpen] = useState(false);
 
+	const [listState, setListStates] = useState({
+		planning: data,
+		enrolled: [],
+		completed: [],
+	});
+	const listNames = ["planning", "enrolled", "completed"];
 	useEffect(() => {
 		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/COSC`)
 			.then(async (value) => {
@@ -35,83 +33,50 @@ function Dashboard() {
 	}, []);
 	//
 
-	return (<><NavBar/>{data.map((course, id)=>(
-		<CourseCard title={course.title} tags={course.tags} labels={course.labels} key={id}/>
-	))}</>)
+	const onDragEnd = (result) => {
+		const { source, destination } = result;
+		if (!destination) {
+			return;
+		}
+		if (source.droppableId === destination.droppableId) {
+			const newArray = Array.from(listState[source.droppableId]);
+			const [removed] = newArray.splice(source.index, 1);
+			newArray.splice(destination.index, 0, removed);
+			setListStates({ ...listState, [source.droppableId]: newArray });
+			return;
+		}
+
+		const newSourceArray = Array.from(listState[source.droppableId]);
+		const newDestinationArray = Array.from(
+			listState[destination.droppableId]
+		);
+		const [removed] = newSourceArray.splice(source.index, 1);
+		newDestinationArray.splice(destination.index, 0, removed);
+
+		setListStates({
+			...listState,
+			[source.droppableId]: newSourceArray,
+			[destination.droppableId]: newDestinationArray,
+		});
+	};
 	return (
 		<>
 			<NavBar />
-			<Container>
-				<ViewContainer isOpen={isOpen}>
-					<ViewHeader>
-						<ListViewTypography variant="h4">
-							My Course Plan
-						</ListViewTypography>
-						<ListViewTypography>
-							Total Credits:{`${totalCredit}`}
-						</ListViewTypography>
-					</ViewHeader>
-					<ListViewHeaderAccent />
-					<ListViewCardContainer>
-						{degreePlan.map((data, i) => (
-							<CardCourse
-								key={i}
-								accentColor={"green"}
-								onClickFunction={() => {
-									const slice = degreePlan.splice(i, 1);
-									const newSlice = [].concat(courses, slice);
-									newSlice.sort(compareCourse);
-									setCourses(newSlice);
-									setDegreePlan(degreePlan);
-									setTotalCredit(
-										degreePlan.reduce(
-											totalCreditsReducer,
-											0
-										)
-									);
-								}}
-							>{`${data.id}`}</CardCourse>
-						))}
-					</ListViewCardContainer>
-				</ViewContainer>
-				<ViewContainer span="2" light isOpen={isOpen}>
-					<ViewHeader dark>
-						<ListViewTypography variant="h4">
-							Offered Courses
-						</ListViewTypography>
-					</ViewHeader>
-					<ListViewCardContainer>
-						{courses.map((data, i) => (
-							<CardCourse
-								key={i}
-								accentColor={"red"}
-								addIcon
-								onClickFunction={() => {
-									const slice = courses.splice(i, 1);
-									const newSlice = [].concat(
-										degreePlan,
-										slice
-									);
-									newSlice.sort(compareCourse);
-									setCourses(courses);
-									setDegreePlan(newSlice);
-									setTotalCredit(
-										newSlice.reduce(totalCreditsReducer, 0)
-									);
-								}}
-							>{`${data.id}`}</CardCourse>
-						))}
-					</ListViewCardContainer>
-				</ViewContainer>
-				{isOpen ? (
-					<CheckButton onClick={() => setIsOpen(!isOpen)} />
-				) : (
-					<>
-						<AddButton onClick={() => setIsOpen(!isOpen)} />
-						<GraphButton />
-					</>
-				)}
-			</Container>
+			<DragDropContext onDragEnd={onDragEnd}>
+				<Container>
+					{listNames.map((listName) => (
+						<DroppableCourseList id={listName}>
+							{listState[listName].map((course, id) => (
+								<DraggableCourseCard
+									course={course}
+									key={course.id}
+									index={id}
+								/>
+							))}
+						</DroppableCourseList>
+					))}
+				</Container>
+			</DragDropContext>
 		</>
 	);
 }

@@ -5,13 +5,13 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 import styled from "styled-components";
 const Container = styled.div`
-	background: #c4c4c4;
-	width: 95vw;
-	margin: 0 auto;
-	margin-top: 10px;
-	height: calc(100vh - 150px);
+	background: white;
+	width: 100vw;
+	height: calc(100vh - 75px);
+	//margin: 0 auto;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+
 `;
 const ViewContainer = styled.div`
 	width: 100%;
