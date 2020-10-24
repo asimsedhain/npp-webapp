@@ -1,50 +1,73 @@
-import React from "react"
-import styled from "styled-components"
-import logo from "../assets/logo_full_white.png"
+import React from "react";
+import styled from "styled-components";
+import logo from "../assets/logo_full_white.png";
+import { Button, TextField, InputAdornment } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
 
-function NavBar(){
-    return (
-        <>
-            <Navbar></Navbar>
-            <LogoImage src = {logo} />
-            <LogoutButton>Logout</LogoutButton>
-        </>
-    )
+function NavBar() {
+	return (
+		<>
+			<NavbarContainer>
+				<LogoImage src={logo} />
+				<NavBarSearchField
+					InputProps={{
+						endAdornment: (
+							<InputAdornment position="end">
+								<NavbarSearchIcon />
+							</InputAdornment>
+						),
+					}}
+				/>
+				<LogoutButton>Logout</LogoutButton>
+			</NavbarContainer>
+			<NavbarAccent />
+		</>
+	);
 }
 
-const Navbar = styled.header`
-    background: #092d74;
-    height: 80px;
-    width: 100vw!important;
-    display: inline-block;
-    padding-bottom: 15px;
+const NavbarContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	background: #092d74;
+	height: 70px;
+	width: 100vw !important;
 `;
 
 const LogoImage = styled.img`
-    position: absolute;
-    width: 187px;
-    height: 73px;
-    left: 14px;
-    top: 0px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    filter: drop-shadow(3px 3px 10px black);
+	width: 160px;
+	height: 60px;
 `;
 
-const LogoutButton = styled.button`
-    position: absolute;
-    right:26px;
-    top: 23px;
-    background: #E55204;
-    width: 117px;
-    height: 48px;
-    
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 28px;
-    line-height: 21px;
-    text-align: center;
+const LogoutButton = styled(Button)`
+	background-color: #e55204;
+	margin-top: auto;
+	margin-bottom: auto;
+	text-transform: none;
+	margin-left: auto;
+	margin-right: 10px;
+	color: white;
+	border-radius: 0px;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 1rem;
 `;
 
-export default NavBar
+const NavBarSearchField = styled(TextField)`
+	background: white;
+	margin: auto 0;
+	margin-left: 10px;
+	width: 30%;
+`;
+
+const NavbarSearchIcon = styled(SearchIcon)`
+	fill: grey;
+`;
+
+const NavbarAccent = styled.div`
+	width: 100vw;
+	background-color: #e55204;
+	height: 5px;
+`;
+
+export default NavBar;
+
