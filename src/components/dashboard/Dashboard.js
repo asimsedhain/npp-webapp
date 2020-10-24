@@ -11,7 +11,8 @@ import {
 	AddButton,
 	GraphButton,
 } from "./DashboardComponents";
-import { CardCourse } from "./CardCourseComponents";
+import { CardCourse, CourseCard } from "./CardCourseComponents";
+import data from "./data"
 
 function Dashboard() {
 	const [degreePlan, setDegreePlan] = useState([]);
@@ -34,6 +35,9 @@ function Dashboard() {
 	}, []);
 	//
 
+	return (<><NavBar/>{data.map((course, id)=>(
+		<CourseCard title={course.title} tags={course.tags} labels={course.labels} key={id}/>
+	))}</>)
 	return (
 		<>
 			<NavBar />
