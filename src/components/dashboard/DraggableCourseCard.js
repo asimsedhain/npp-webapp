@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
-
-
 const CourseCardContainer = styled.div`
 	border-style: solid;
 	border-color: #aaa;
@@ -13,6 +11,7 @@ const CourseCardContainer = styled.div`
 	flex-direction: column;
 	padding: 8px 20px;
 	background-color: ${(props) => (props.gray ? "#C9C9C9" : "white")};
+	margin-top: 15px;
 `;
 
 const CourseCardTitle = styled.h3`
@@ -55,22 +54,24 @@ function CourseCard({ course, provided }) {
 			{...provided.dragHandleProps}
 		>
 			<CourseCardTagBase>
-				{course.tags.map((tag, id) => (
-					<CourseCardTag key={id} color={tag.color}>
-						{tag.name}
-					</CourseCardTag>
-				))}
+				{course.tags &&
+					course.tags.map((tag, id) => (
+						<CourseCardTag key={id} color={tag.color}>
+							{tag.name}
+						</CourseCardTag>
+					))}
 			</CourseCardTagBase>
 
 			<CourseCardTitleBase>
-				<CourseCardTitle>{course.title}</CourseCardTitle>
+				<CourseCardTitle>{course.name}</CourseCardTitle>
 			</CourseCardTitleBase>
 			<CourseCardTagBase>
-				{course.labels.map((label, id) => (
-					<CourseCardLabel key={id} color={label.color}>
-						{label.name}
-					</CourseCardLabel>
-				))}
+				{course.labels &&
+					course.labels.map((label, id) => (
+						<CourseCardLabel key={id} color={label.color}>
+							{label.name}
+						</CourseCardLabel>
+					))}
 			</CourseCardTagBase>
 		</CourseCardContainer>
 	);

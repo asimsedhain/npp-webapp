@@ -4,12 +4,14 @@ import logo from "../assets/logo_full_white.png";
 import { Button, TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
-function NavBar() {
+function NavBar({value, setValue}) {
 	return (
 		<>
-			<NavbarContainer>
+			<NavbarContainer> 
 				<LogoImage src={logo} />
-				<NavBarSearchField
+				<NavBarSearchField value={value} onChange={(e)=>{
+					setValue(e.target.value.toLowerCase())
+				}}
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">
@@ -30,7 +32,6 @@ const NavbarContainer = styled.div`
 	flex-direction: row;
 	background: #092d74;
 	height: 70px;
-	width: 100vw !important;
 `;
 
 const LogoImage = styled.img`
@@ -64,7 +65,6 @@ const NavbarSearchIcon = styled(SearchIcon)`
 `;
 
 const NavbarAccent = styled.div`
-	width: 100vw;
 	background-color: #e55204;
 	height: 5px;
 `;

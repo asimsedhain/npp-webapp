@@ -1,6 +1,7 @@
 const cmstCourse = {
 	id: "CMST 1315",
-	title: "CMST 1315: Intorduction to Speech",
+	name: "CMST 1315: Intorduction to Speech",
+	courseNumber: 1315,
 	tags: [
 		{ name: "Prerequisite: Unsatisfied", color: "#FF0000" },
 		{
@@ -17,7 +18,8 @@ const cmstCourse = {
 
 const coscCourse = {
 	id: "COSC 4335",
-	title: "COSC 4335: Software Development",
+	name: "COSC 4335: Software Development",
+	courseNumber: 4335,
 	tags: [
 		{ name: "Prerequisite: Satisfied", color: "#429E16" },
 		{
@@ -34,7 +36,9 @@ const coscCourse = {
 
 const mathCourse = {
 	id: "MATH 3425",
-	title: "MATH 3425: Foundation of Mathematics",
+	name: "MATH 3425: Foundation of Mathematics",
+	courseNumber: 3425,
+
 	tags: [
 		{ name: "Prerequisite: Satisfied", color: "#429E16" },
 		{
@@ -49,8 +53,10 @@ const mathCourse = {
 	labels: [{ name: "Fall 2020", color: "#F44646" }],
 };
 
+const temp1 = { ...mathCourse, id: "temp1" };
+const temp2 = { ...mathCourse, id: "temp2" };
+const temp3 = { ...mathCourse, id: "temp3" };
 
-let data = [cmstCourse, coscCourse, mathCourse]
+let data = [cmstCourse, coscCourse, mathCourse, temp1, temp2, temp3];
 
-
-export default data
+export default data;
