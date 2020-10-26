@@ -47,8 +47,4 @@ const NavbarSearchIcon = styled(SearchIcon)`
 	fill: grey;
 `;
 
-const ScrollContainer = styled.div`
-	height: calc(100vh - 175px);
-`
-
 export default SidePanel;
