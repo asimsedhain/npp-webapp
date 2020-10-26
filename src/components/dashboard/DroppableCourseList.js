@@ -3,18 +3,24 @@ import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 
 const CourseList = styled.div`
-	//display: flex;
-	//flex-direction: column;
-	//gap: 15px;
-	//height: max-content;
-	//overflow-y: auto;
+	overflow-y: auto;
+	height: calc(100% - 35px);
 	min-height: 50px;
-	//TODO fix this
-	//max-height: calc(100%);
+	::-webkit-scrollbar {
+		width: 5px;
+		height: 5px;
+	}
+
+	::-webkit-scrollbar-track {
+		background-color: #ccc;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: #aaa;
+		border-radius: 4px;
+	}
 `;
 
 const CourseListBase = styled.div`
-	height: max-content;
 	background-color: ${(props) => !props.noBackGround && "#E7E7E7"};
 	padding: 15px 10px;
 `;

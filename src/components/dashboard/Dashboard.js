@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import NavBar from "./NavBar";
-import { DroppableListContainer, Container } from "./DashboardComponents";
+import {
+	DroppableListContainer,
+	Container,
+	PaddingContainer,
+} from "./DashboardComponents";
 import DraggableCourseCard from "./DraggableCourseCard";
 import DroppableCourseList from "./DroppableCourseList";
 import data from "./data";
@@ -14,7 +18,6 @@ const defaultPageState = "defaultPageState";
 
 function Dashboard() {
 	const [pageState, setPageState] = useState(defaultPageState);
-
 	const [listState, setListStates] = useState({
 		planning: data,
 		enrolled: [],
@@ -48,9 +51,11 @@ function Dashboard() {
 							color: "#E59804",
 						});
 					}
-					temp.tags.push(		{ name: "Prerequisite: Unsatisfied", color: "#FF0000" },
-					);
-					temp.labels.push({name: "Spring 2021", color: "#46F446"});
+					temp.tags.push({
+						name: "Prerequisite: Unsatisfied",
+						color: "#FF0000",
+					});
+					temp.labels.push({ name: "Spring 2021", color: "#46F446" });
 					temp.name = `${temp.id}: ${temp.name}`;
 					return temp;
 				});
@@ -64,6 +69,7 @@ function Dashboard() {
 		<>
 			<NavBar value={internalSearchKey} setValue={setInternalSearchKey} />
 			<GraphButton
+				upper
 				show={pageState === defaultPageState}
 				onClick={() => setPageState(graphPageState)}
 			/>
@@ -84,32 +90,34 @@ function Dashboard() {
 					}
 				>
 					<Container split={pageState === sidePanelPageState}>
-						<DroppableListContainer>
-							{listNames.map((listName) => (
-								<DroppableCourseList
-									key={listName}
-									id={listName}
-									credits={getTotalCredits(
-										listState[listName],
-										internalSearchKey
-									)}
-								>
-									{listState[listName]
-										.filter((course) =>
-											course.name
-												.toLowerCase()
-												.includes(internalSearchKey)
-										)
-										.map((course, id) => (
-											<DraggableCourseCard
-												course={course}
-												key={course.id}
-												index={id}
-											/>
-										))}
-								</DroppableCourseList>
-							))}
-						</DroppableListContainer>
+						<PaddingContainer split={pageState===sidePanelPageState}>
+							<DroppableListContainer>
+								{listNames.map((listName) => (
+									<DroppableCourseList
+										key={listName}
+										id={listName}
+										credits={getTotalCredits(
+											listState[listName],
+											internalSearchKey
+										)}
+									>
+										{listState[listName]
+											.filter((course) =>
+												course.name
+													.toLowerCase()
+													.includes(internalSearchKey)
+											)
+											.map((course, id) => (
+												<DraggableCourseCard
+													course={course}
+													key={course.id}
+													index={id}
+												/>
+											))}
+									</DroppableCourseList>
+								))}
+							</DroppableListContainer>
+						</PaddingContainer>
 						{pageState === sidePanelPageState && (
 							<SidePanel>
 								<DroppableCourseList
