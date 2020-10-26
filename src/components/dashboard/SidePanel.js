@@ -32,6 +32,8 @@ const SidePanelHeader = styled.div`
 
 const SidePanelContainer = styled.div`
 	background-color: #e55204;
+	height: calc(100vh - 75px);
+	overflow-y: hidden;
 `;
 
 const NavBarSearchField = styled(TextField)`
@@ -44,5 +46,9 @@ const NavBarSearchField = styled(TextField)`
 const NavbarSearchIcon = styled(SearchIcon)`
 	fill: grey;
 `;
+
+const ScrollContainer = styled.div`
+	height: calc(100vh - 175px);
+`
 
 export default SidePanel;

@@ -5,6 +5,7 @@ import { Droppable } from "react-beautiful-dnd";
 const CourseList = styled.div`
 	overflow-y: auto;
 	height: calc(100% - 35px);
+	height: ${props=> props.noBackGround && "calc(100vh - 205px)"};
 	min-height: 50px;
 	::-webkit-scrollbar {
 		width: 5px;
@@ -67,6 +68,7 @@ const DroppableCourseList = ({
 					<CourseList
 						ref={provided.innerRef}
 						isDraggingOver={snapshot.isDraggingOver}
+						noBackGround={noBackGround}
 					>
 						{children}
 						{provided.placeholder}
