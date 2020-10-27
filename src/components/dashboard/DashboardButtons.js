@@ -31,7 +31,7 @@ const ButtonWrapper = styled.div`
 	display: ${(props) => (props.show ? "inline" : "none")};
 	position: absolute;
 	right: 5%;
-	bottom: ${(props)=> props.upper?  "calc(7% + 5rem)":"7%"};
+	bottom: ${(props)=> props.upper?  "calc(5% + 5rem)":"5%"};
 	& img {
 		height: 5rem;
 	}
