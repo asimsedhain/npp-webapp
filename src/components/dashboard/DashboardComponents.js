@@ -6,6 +6,11 @@ const DroppableListContainer = styled.div`
 	grid-template-columns: repeat(3, minmax(300px, 1fr));
 	grid-template-rows: calc(100vh - 55px - 40px);
 	grid-gap: 15px;
+	@media (max-width: 767px) {
+	height: calc(100vh - 55px - 10px);
+		grid-gap: 10px;
+		grid-template-rows: calc(100vh - 55px - 10px);
+	}
 	overflow-y: hidden;
 	overflow-x: auto;
 `;
@@ -21,6 +26,10 @@ const Container = styled.div`
 const PaddingContainer = styled.div`
 	overflow: hidden;
 	padding: 20px;
+	@media (max-width: 767px) {
+		padding: 5px;
+	}
 	padding-right: ${(props) => props.split && "0px"};
+	
 `;
 export { DroppableListContainer, Container, PaddingContainer };

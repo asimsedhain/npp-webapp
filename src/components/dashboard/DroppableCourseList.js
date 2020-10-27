@@ -5,7 +5,10 @@ import { Droppable } from "react-beautiful-dnd";
 const CourseList = styled.div`
 	overflow-y: auto;
 	height: calc(100% - 35px);
-	height: ${props=> props.noBackGround && "calc(100vh - 185px)"};
+	height: ${(props) => props.noBackGround && "calc(100vh - 185px)"};
+	@media (max-width: 767px) {
+		height: ${(props) => props.noBackGround && "calc(100vh - 155px)"};
+	}
 	min-height: 50px;
 	::-webkit-scrollbar {
 		width: 5px;
