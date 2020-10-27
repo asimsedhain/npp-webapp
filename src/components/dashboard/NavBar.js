@@ -58,6 +58,11 @@ const NavBarSearchField = styled(TextField)`
 	margin: auto 0;
 	margin-left: 10px;
 	width: 30%;
+@media (max-width: 767px) {
+		margin-right: 10px;
+		flex: 2;
+	}
+
 `;
 
 const NavbarSearchIcon = styled(SearchIcon)`
