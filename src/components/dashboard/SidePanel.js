@@ -32,7 +32,7 @@ const SidePanelHeader = styled.div`
 
 const SidePanelContainer = styled.div`
 	background-color: #e55204;
-	height: calc(100vh - 75px);
+	height: calc(100vh - 55px);
 	overflow-y: hidden;
 `;
 

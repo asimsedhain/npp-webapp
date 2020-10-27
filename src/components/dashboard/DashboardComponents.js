@@ -1,10 +1,10 @@
 import styled from "styled-components";
 const DroppableListContainer = styled.div`
 	background: white;
-	height: calc(100vh - 75px - 40px);
+	height: calc(100vh - 55px - 40px);
 	display: grid;
 	grid-template-columns: repeat(3, minmax(300px, 1fr));
-	grid-template-rows: calc(100vh - 75px - 40px);
+	grid-template-rows: calc(100vh - 55px - 40px);
 	grid-gap: 15px;
 	overflow-y: hidden;
 	overflow-x: auto;

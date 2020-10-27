@@ -31,12 +31,12 @@ const NavbarContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	background: #092d74;
-	height: 70px;
+	height: 50px;
 `;
 
 const LogoImage = styled.img`
-	width: 160px;
-	height: 60px;
+	width: 100px;
+	height: 40px;
 `;
 
 const LogoutButton = styled(Button)`
