@@ -11,6 +11,7 @@ import DroppableCourseList from "./DroppableCourseList";
 import data from "./data";
 import { GraphButton, AddButton, CheckButton } from "./DashboardButtons";
 import SidePanel from "./SidePanel";
+import GraphView from "./GraphView";
 
 const graphPageState = "graphPageState";
 const sidePanelPageState = "sidePanelPageState";
@@ -82,7 +83,9 @@ function Dashboard() {
 				onClick={() => setPageState(defaultPageState)}
 			/>
 			{pageState === graphPageState ? (
-				<></>
+				<>
+					<GraphView></GraphView>
+				</>
 			) : (
 				<DragDropContext
 					onDragEnd={(result) =>
@@ -92,6 +95,7 @@ function Dashboard() {
 					<Container split={pageState === sidePanelPageState}>
 						<PaddingContainer split={pageState===sidePanelPageState}>
 							<DroppableListContainer>
+							
 								{listNames.map((listName) => (
 									<DroppableCourseList
 										key={listName}
