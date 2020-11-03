@@ -18,7 +18,7 @@ const sidePanelPageState = "sidePanelPageState";
 const defaultPageState = "defaultPageState";
 
 function Dashboard() {
-	const [pageState, setPageState] = useState(defaultPageState);
+	const [pageState, setPageState] = useState(graphPageState);
 	const [listState, setListStates] = useState({
 		planning: data,
 		enrolled: [],
@@ -84,7 +84,8 @@ function Dashboard() {
 			/>
 			{pageState === graphPageState ? (
 				<>
-					<GraphView></GraphView>
+				<GraphView></GraphView>
+
 				</>
 			) : (
 				<DragDropContext
