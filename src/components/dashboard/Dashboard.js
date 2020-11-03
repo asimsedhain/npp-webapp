@@ -18,6 +18,8 @@ const sidePanelPageState = "sidePanelPageState";
 const defaultPageState = "defaultPageState";
 
 function Dashboard() {
+	// TODO
+	// change back to defaultPageState
 	const [pageState, setPageState] = useState(graphPageState);
 	const [listState, setListStates] = useState({
 		planning: data,
