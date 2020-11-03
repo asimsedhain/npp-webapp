@@ -49,9 +49,9 @@ const CourseCardLabel = styled(CourseCardTag)`
 function CourseCard({ course, provided }) {
 	return (
 		<CourseCardContainer
-			// ref={provided.innerRef}
-			// {...provided.draggableProps}
-			// {...provided.dragHandleProps}
+			 ref={provided && provided.innerRef}
+			 {...(provided && provided.draggableProps)}
+			 {...(provided && provided.dragHandleProps)}
 		>
 			<CourseCardTagBase>
 				{course.tags &&
