@@ -11,6 +11,7 @@ import DroppableCourseList from "./DroppableCourseList";
 import data from "./data";
 import { GraphButton, AddButton, CheckButton } from "./DashboardButtons";
 import SidePanel from "./SidePanel";
+import CourseModal from "../modal/CourseModal";
 
 const graphPageState = "graphPageState";
 const sidePanelPageState = "sidePanelPageState";
@@ -67,7 +68,14 @@ function Dashboard() {
 
 	return (
 		<>
+			{/*
+				NavBar
+				*/}
 			<NavBar value={internalSearchKey} setValue={setInternalSearchKey} />
+
+			{/*
+				Buttons
+				*/}
 			<GraphButton
 				upper
 				show={pageState === defaultPageState}
@@ -81,6 +89,17 @@ function Dashboard() {
 				show={pageState !== defaultPageState}
 				onClick={() => setPageState(defaultPageState)}
 			/>
+			{/*
+				Buttons End
+				*/}
+
+			{/*
+			Course modal
+											*/}
+
+		{/*
+			Draggable lists
+			*/}
 			{pageState === graphPageState ? (
 				<></>
 			) : (
@@ -90,7 +109,9 @@ function Dashboard() {
 					}
 				>
 					<Container split={pageState === sidePanelPageState}>
-						<PaddingContainer split={pageState===sidePanelPageState}>
+						<PaddingContainer
+							split={pageState === sidePanelPageState}
+						>
 							<DroppableListContainer>
 								{listNames.map((listName) => (
 									<DroppableCourseList
