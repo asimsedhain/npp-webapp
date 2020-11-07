@@ -12,13 +12,15 @@ const CourseCardContainer = styled.div`
 	padding: 8px 20px;
 	background-color: ${(props) => (props.gray ? "#C9C9C9" : "white")};
 	margin-top: 15px;
+	gap: 6px;
 `;
 
 const CourseCardTitle = styled.h3`
 	font-family: Roboto, sans-serif;
 	font-weight: bold;
 	text-transform: uppercase;
-	margin: 6px 0px;
+	margin: 0px 0px;
+	color: #333;
 `;
 
 const CourseCardTitleBase = styled.div`
@@ -33,12 +35,12 @@ const CourseCardTag = styled.div`
 	font-size: 0.8rem;
 	color: white;
 	padding: 2px 4px;
-	margin-right: 8px;
 `;
 const CourseCardTagBase = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: row;
+	gap: 4px 8px;
 `;
 
 const CourseCardLabel = styled(CourseCardTag)`
@@ -88,3 +90,11 @@ const DraggableCourseCard = ({ course, index }) => {
 };
 
 export default DraggableCourseCard;
+export {
+	CourseCardTagBase,
+	CourseCardTag,
+	CourseCardLabel,
+	CourseCardTitleBase,
+	CourseCardTitle,
+
+};
