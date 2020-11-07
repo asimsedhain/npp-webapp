@@ -20,7 +20,7 @@ const CourseCardTitle = styled.h3`
 	font-weight: bold;
 	text-transform: uppercase;
 	margin: 0px 0px;
-	color: #333;
+	color: #303030;
 `;
 
 const CourseCardTitleBase = styled.div`
@@ -48,12 +48,13 @@ const CourseCardLabel = styled(CourseCardTag)`
 	padding: 6px 4px;
 `;
 
-function CourseCard({ course, provided }) {
+function CourseCard({ course, provided, clickHandle }) {
 	return (
 		<CourseCardContainer
 			ref={provided.innerRef}
 			{...provided.draggableProps}
 			{...provided.dragHandleProps}
+			onClick={clickHandle}
 		>
 			<CourseCardTagBase>
 				{course.tags &&
@@ -79,11 +80,15 @@ function CourseCard({ course, provided }) {
 	);
 }
 
-const DraggableCourseCard = ({ course, index }) => {
+const DraggableCourseCard = ({ course, index, clickHandle }) => {
 	return (
 		<Draggable draggableId={course.id} index={index}>
 			{(provided, snapshot) => (
-				<CourseCard provided={provided} course={course} />
+				<CourseCard
+					provided={provided}
+					course={course}
+					clickHandle={() => clickHandle(course)}
+				/>
 			)}
 		</Draggable>
 	);
@@ -96,5 +101,4 @@ export {
 	CourseCardLabel,
 	CourseCardTitleBase,
 	CourseCardTitle,
-
 };

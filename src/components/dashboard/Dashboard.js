@@ -8,7 +8,7 @@ import {
 } from "./DashboardComponents";
 import DraggableCourseCard from "./DraggableCourseCard";
 import DroppableCourseList from "./DroppableCourseList";
-import data from "./data";
+import data from "./data.json";
 import { GraphButton, AddButton, CheckButton } from "./DashboardButtons";
 import SidePanel from "./SidePanel";
 import CourseModal from "../modal/CourseModal";
@@ -17,19 +17,31 @@ const graphPageState = "graphPageState";
 const sidePanelPageState = "sidePanelPageState";
 const defaultPageState = "defaultPageState";
 
+const courseData = data.map(courseMap);
+
 function Dashboard() {
 	const [pageState, setPageState] = useState(defaultPageState);
 	const [listState, setListStates] = useState({
-		planning: data,
+		planning: courseData,
 		enrolled: [],
 		completed: [],
 		server: [],
 	});
+	const [modalState, setModalState] = useState({
+		isOpen: false,
+		course: null,
+	});
+	const closeModal = () => {
+		setModalState({ isOpen: false, course: null });
+	};
+	const setModalCourse = (c) => {
+		setModalState({ isOpen: true, course: c });
+	};
 	const [internalSearchKey, setInternalSearchKey] = useState("");
 
 	const listNames = ["planning", "enrolled", "completed"];
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/COSC`)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/MATH`)
 			.then(async (value) => {
 				return value.json();
 			})
@@ -37,30 +49,8 @@ function Dashboard() {
 				data.sort(compareCourse);
 
 				//Will be removed in the futre
-				data = data.map((course) => {
-					let temp = { ...course };
-					temp.tags = [];
-					temp.labels = [];
-					if (temp.courseNumber < 3000) {
-						temp.tags.push({
-							name: "Lower Level",
-							color: "#494949",
-						});
-					} else {
-						temp.tags.push({
-							name: "Upper Level",
-							color: "#E59804",
-						});
-					}
-					temp.tags.push({
-						name: "Prerequisite: Unsatisfied",
-						color: "#FF0000",
-					});
-					temp.labels.push({ name: "Spring 2021", color: "#46F446" });
-					temp.name = `${temp.id}: ${temp.name}`;
-					return temp;
-				});
 				console.log(data);
+				data = data.map(courseMap);
 				setListStates({ ...listState, server: data });
 			});
 	}, []);
@@ -96,8 +86,13 @@ function Dashboard() {
 			{/*
 			Course modal
 											*/}
+			<CourseModal
+				course={modalState.course}
+				modalState={modalState.isOpen}
+				closeHandle={closeModal}
+			/>
 
-		{/*
+			{/*
 			Draggable lists
 			*/}
 			{pageState === graphPageState ? (
@@ -130,6 +125,7 @@ function Dashboard() {
 											)
 											.map((course, id) => (
 												<DraggableCourseCard
+													clickHandle={setModalCourse}
 													course={course}
 													key={course.id}
 													index={id}
@@ -148,6 +144,7 @@ function Dashboard() {
 								>
 									{listState["server"].map((course, id) => (
 										<DraggableCourseCard
+											clickHandle={setModalCourse}
 											course={course}
 											key={course.id}
 											index={id}
@@ -207,6 +204,30 @@ function onDragEnd(result, listState, setListStates) {
 		[source.droppableId]: newSourceArray,
 		[destination.droppableId]: newDestinationArray,
 	});
+}
+
+function courseMap(course) {
+	let temp = { ...course };
+	temp.tags = [];
+	temp.labels = [];
+	if (temp.courseNumber < 3000) {
+		temp.tags.push({
+			name: "Lower Level",
+			color: "#494949",
+		});
+	} else {
+		temp.tags.push({
+			name: "Upper Level",
+			color: "#E59804",
+		});
+	}
+	temp.tags.push({
+		name: "Prerequisite: Unsatisfied",
+		color: "#FF0000",
+	});
+	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
+	temp.name = `${temp.id}: ${temp.name}`;
+	return temp;
 }
 
 export default Dashboard;
