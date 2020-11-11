@@ -1,4 +1,5 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux"
 import Modal from "@material-ui/core/Modal";
 import styled from "styled-components";
 import {
@@ -9,9 +10,14 @@ import {
 	CourseCardTitle,
 } from "../dashboard/DraggableCourseCard";
 
-function CourseModal({ course, modalState, closeHandle }) {
+import {closeModal} from "../../redux"
+
+function CourseModal() {
+	const dispatch = useDispatch()
+	const {isOpen, course} = useSelector((state)=>{return state.modal})
+
 	return (
-		<Modal open={modalState} onClick={closeHandle}>
+		<Modal open={isOpen} onClick={()=>{dispatch(closeModal())}}>
 			{course && (
 				<StyledModalWrapper>
 					<StyledModalBody>

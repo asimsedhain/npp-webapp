@@ -1,6 +1,51 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../redux";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
+
+function CourseCard({ course, provided }) {
+	const dispatch = useDispatch();
+	return (
+		<CourseCardContainer
+			ref={provided.innerRef}
+			{...provided.draggableProps}
+			{...provided.dragHandleProps}
+			onClick={() => {
+				dispatch(openModal(course));
+			}}
+		>
+			<CourseCardTagBase>
+				{course.tags &&
+					course.tags.map((tag, id) => (
+						<CourseCardTag key={id} color={tag.color}>
+							{tag.name}
+						</CourseCardTag>
+					))}
+			</CourseCardTagBase>
+
+			<CourseCardTitleBase>
+				<CourseCardTitle>{course.name}</CourseCardTitle>
+			</CourseCardTitleBase>
+			<CourseCardTagBase>
+				{course.labels &&
+					course.labels.map((label, id) => (
+						<CourseCardLabel key={id} color={label.color}>
+							{label.name}
+						</CourseCardLabel>
+					))}
+			</CourseCardTagBase>
+		</CourseCardContainer>
+	);
+}
+
+const DraggableCourseCard = ({ course, index }) => {
+	return (
+		<Draggable draggableId={course.id} index={index}>
+			{(provided) => <CourseCard provided={provided} course={course} />}
+		</Draggable>
+	);
+};
 
 const CourseCardContainer = styled.div`
 	border-style: solid;
@@ -47,52 +92,6 @@ const CourseCardLabel = styled(CourseCardTag)`
 	font-size: 1rem;
 	padding: 6px 4px;
 `;
-
-function CourseCard({ course, provided, clickHandle }) {
-	return (
-		<CourseCardContainer
-			ref={provided.innerRef}
-			{...provided.draggableProps}
-			{...provided.dragHandleProps}
-			onClick={clickHandle}
-		>
-			<CourseCardTagBase>
-				{course.tags &&
-					course.tags.map((tag, id) => (
-						<CourseCardTag key={id} color={tag.color}>
-							{tag.name}
-						</CourseCardTag>
-					))}
-			</CourseCardTagBase>
-
-			<CourseCardTitleBase>
-				<CourseCardTitle>{course.name}</CourseCardTitle>
-			</CourseCardTitleBase>
-			<CourseCardTagBase>
-				{course.labels &&
-					course.labels.map((label, id) => (
-						<CourseCardLabel key={id} color={label.color}>
-							{label.name}
-						</CourseCardLabel>
-					))}
-			</CourseCardTagBase>
-		</CourseCardContainer>
-	);
-}
-
-const DraggableCourseCard = ({ course, index, clickHandle }) => {
-	return (
-		<Draggable draggableId={course.id} index={index}>
-			{(provided, snapshot) => (
-				<CourseCard
-					provided={provided}
-					course={course}
-					clickHandle={() => clickHandle(course)}
-				/>
-			)}
-		</Draggable>
-	);
-};
 
 export default DraggableCourseCard;
 export {

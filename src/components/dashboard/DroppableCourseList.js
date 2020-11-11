@@ -2,6 +2,38 @@ import React from "react";
 import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 
+const DroppableCourseList = ({
+	id,
+	children,
+	hideHeader,
+	noBackGround,
+	credits,
+}) => {
+	return (
+		<CourseListBase noBackGround={noBackGround}>
+			{!hideHeader && (
+				<ListTitleBase>
+					<ListTitleMain>{id}</ListTitleMain>
+					<ListTitleSecondary>credits: {credits}</ListTitleSecondary>
+					<ListTitleSideButton>...</ListTitleSideButton>
+				</ListTitleBase>
+			)}
+			<Droppable droppableId={id}>
+				{(provided, snapshot) => (
+					<CourseList
+						ref={provided.innerRef}
+						isDraggingOver={snapshot.isDraggingOver}
+						noBackGround={noBackGround}
+					>
+						{children}
+						{provided.placeholder}
+					</CourseList>
+				)}
+			</Droppable>
+		</CourseListBase>
+	);
+};
+
 const CourseList = styled.div`
 	overflow-y: auto;
 	height: calc(100% - 35px);
@@ -50,35 +82,4 @@ const ListTitleSideButton = styled.div`
 	margin-left: 10px;
 `;
 
-const DroppableCourseList = ({
-	id,
-	children,
-	hideHeader,
-	noBackGround,
-	credits,
-}) => {
-	return (
-		<CourseListBase noBackGround={noBackGround}>
-			{!hideHeader && (
-				<ListTitleBase>
-					<ListTitleMain>{id}</ListTitleMain>
-					<ListTitleSecondary>credits: {credits}</ListTitleSecondary>
-					<ListTitleSideButton>...</ListTitleSideButton>
-				</ListTitleBase>
-			)}
-			<Droppable droppableId={id}>
-				{(provided, snapshot) => (
-					<CourseList
-						ref={provided.innerRef}
-						isDraggingOver={snapshot.isDraggingOver}
-						noBackGround={noBackGround}
-					>
-						{children}
-						{provided.placeholder}
-					</CourseList>
-				)}
-			</Droppable>
-		</CourseListBase>
-	);
-};
 export default DroppableCourseList;

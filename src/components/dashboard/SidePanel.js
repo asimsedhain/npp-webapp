@@ -1,9 +1,11 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux"
 import styled from "styled-components";
-import { TextField, InputAdornment } from "@material-ui/core";
+import { TextField, InputAdornment, CircularProgress } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
 function SidePanel({ children }) {
+	const {loading, error}= useSelector((state)=>{return state.courses})
 	return (
 		<SidePanelContainer>
 			<SidePanelHeader>Courses Offered</SidePanelHeader>
@@ -16,10 +18,29 @@ function SidePanel({ children }) {
 					),
 				}}
 			/>
-			{children}
+		{loading || error? (<InfoContainer>{error? <h2>{error}</h2>:<CircularProgress/>  }</InfoContainer>) : children}
 		</SidePanelContainer>
 	);
 }
+
+const InfoContainer = styled.div`
+	display: flex;
+	height: 100%;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	& div{
+		margin-bottom: calc(100vh - 55px - 100%);
+		width: 70px!important;
+		height: 70px!important;
+		color: #092d74;
+	}
+	& h2{
+		
+		margin-bottom: calc(100vh - 55px - 100%);
+		color:white;
+	}
+`
 
 const SidePanelHeader = styled.div`
 	font-weight: bold;

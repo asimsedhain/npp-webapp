@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext } from "react-beautiful-dnd";
 import NavBar from "./NavBar";
 import {
@@ -8,76 +9,60 @@ import {
 } from "./DashboardComponents";
 import DraggableCourseCard from "./DraggableCourseCard";
 import DroppableCourseList from "./DroppableCourseList";
-import data from "./data.json";
 import { GraphButton, AddButton, CheckButton } from "./DashboardButtons";
 import SidePanel from "./SidePanel";
 import CourseModal from "../modal/CourseModal";
 
-const graphPageState = "graphPageState";
-const sidePanelPageState = "sidePanelPageState";
-const defaultPageState = "defaultPageState";
-
-const courseData = data.map(courseMap);
+import {
+	GRAPH_VIEW,
+	PANEL_VIEW,
+	DEFAULT_VIEW,
+	openGraphView,
+	openPanelView,
+	openDefaultView,
+	moveCourse,
+	fetchCourse,
+} from "../../redux";
 
 function Dashboard() {
-	const [pageState, setPageState] = useState(defaultPageState);
-	const [listState, setListStates] = useState({
-		planning: courseData,
-		enrolled: [],
-		completed: [],
-		server: [],
+	const dispatch = useDispatch();
+	const pageState = useSelector((state) => {
+		return state.dashboard.view;
 	});
-	const [modalState, setModalState] = useState({
-		isOpen: false,
-		course: null,
+	const searchKey = useSelector((state) => {
+		return state.dashboard.searchKey;
 	});
-	const closeModal = () => {
-		setModalState({ isOpen: false, course: null });
-	};
-	const setModalCourse = (c) => {
-		setModalState({ isOpen: true, course: c });
-	};
-	const [internalSearchKey, setInternalSearchKey] = useState("");
+	const courses = useSelector((state) => {
+		return state.courses;
+	});
 
 	const listNames = ["planning", "enrolled", "completed"];
-	useEffect(() => {
-		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/MATH`)
-			.then(async (value) => {
-				return value.json();
-			})
-			.then((data) => {
-				data.sort(compareCourse);
-
-				//Will be removed in the futre
-				console.log(data);
-				data = data.map(courseMap);
-				setListStates({ ...listState, server: data });
-			});
-	}, []);
-	//
 
 	return (
 		<>
 			{/*
 				NavBar
 				*/}
-			<NavBar value={internalSearchKey} setValue={setInternalSearchKey} />
+			<NavBar />
 
 			{/*
 				Buttons
 				*/}
 			<GraphButton
 				upper
-				show={pageState === defaultPageState}
-				onClick={() => setPageState(graphPageState)}
+				show={pageState === DEFAULT_VIEW}
+				onClick={() => dispatch(openGraphView())}
 			/>
 			<AddButton
-				show={pageState === defaultPageState}
-				onClick={() => setPageState(sidePanelPageState)}
+				show={pageState === DEFAULT_VIEW}
+				onClick={() => {
+					dispatch(openPanelView());
+					courses.server.length === 0 && dispatch(fetchCourse());
+				}}
 			/>
 			<CheckButton
-				show={pageState !== defaultPageState}
-				onClick={() => setPageState(defaultPageState)}
+				show={pageState !== DEFAULT_VIEW}
+				onClick={() => dispatch(openDefaultView())}
 			/>
 			{/*
 				Buttons End
@@ -86,46 +71,39 @@ function Dashboard() {
 			{/*
 			Course modal
 											*/}
-			<CourseModal
-				course={modalState.course}
-				modalState={modalState.isOpen}
-				closeHandle={closeModal}
-			/>
+			<CourseModal />
 
 			{/*
 			Draggable lists
 			*/}
-			{pageState === graphPageState ? (
+			{pageState === GRAPH_VIEW ? (
 				<></>
 			) : (
 				<DragDropContext
 					onDragEnd={(result) =>
-						onDragEnd(result, listState, setListStates)
+						dispatch(moveCourse(result.source, result.destination))
 					}
 				>
-					<Container split={pageState === sidePanelPageState}>
-						<PaddingContainer
-							split={pageState === sidePanelPageState}
-						>
+					<Container split={pageState === PANEL_VIEW}>
+						<PaddingContainer split={pageState === PANEL_VIEW}>
 							<DroppableListContainer>
 								{listNames.map((listName) => (
 									<DroppableCourseList
 										key={listName}
 										id={listName}
 										credits={getTotalCredits(
-											listState[listName],
-											internalSearchKey
+											courses[listName],
+											searchKey
 										)}
 									>
-										{listState[listName]
+										{courses[listName]
 											.filter((course) =>
 												course.name
 													.toLowerCase()
-													.includes(internalSearchKey)
+													.includes(searchKey)
 											)
 											.map((course, id) => (
 												<DraggableCourseCard
-													clickHandle={setModalCourse}
 													course={course}
 													key={course.id}
 													index={id}
@@ -135,16 +113,15 @@ function Dashboard() {
 								))}
 							</DroppableListContainer>
 						</PaddingContainer>
-						{pageState === sidePanelPageState && (
+						{pageState === PANEL_VIEW && (
 							<SidePanel>
 								<DroppableCourseList
 									id={"server"}
 									hideHeader
 									noBackGround
 								>
-									{listState["server"].map((course, id) => (
+									{courses["server"].map((course, id) => (
 										<DraggableCourseCard
-											clickHandle={setModalCourse}
 											course={course}
 											key={course.id}
 											index={id}
@@ -181,53 +158,6 @@ function getTotalCredits(list, filterKey) {
 		.reduce(totalCreditsReducer, 0);
 }
 
-function onDragEnd(result, listState, setListStates) {
-	const { source, destination } = result;
-	if (!destination) {
-		return;
-	}
-	if (source.droppableId === destination.droppableId) {
-		const newArray = Array.from(listState[source.droppableId]);
-		const [removed] = newArray.splice(source.index, 1);
-		newArray.splice(destination.index, 0, removed);
-		setListStates({ ...listState, [source.droppableId]: newArray });
-		return;
-	}
 
-	const newSourceArray = Array.from(listState[source.droppableId]);
-	const newDestinationArray = Array.from(listState[destination.droppableId]);
-	const [removed] = newSourceArray.splice(source.index, 1);
-	newDestinationArray.splice(destination.index, 0, removed);
-
-	setListStates({
-		...listState,
-		[source.droppableId]: newSourceArray,
-		[destination.droppableId]: newDestinationArray,
-	});
-}
-
-function courseMap(course) {
-	let temp = { ...course };
-	temp.tags = [];
-	temp.labels = [];
-	if (temp.courseNumber < 3000) {
-		temp.tags.push({
-			name: "Lower Level",
-			color: "#494949",
-		});
-	} else {
-		temp.tags.push({
-			name: "Upper Level",
-			color: "#E59804",
-		});
-	}
-	temp.tags.push({
-		name: "Prerequisite: Unsatisfied",
-		color: "#FF0000",
-	});
-	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
-	temp.name = `${temp.id}: ${temp.name}`;
-	return temp;
-}
 
 export default Dashboard;

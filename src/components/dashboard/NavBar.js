@@ -1,17 +1,25 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSearchKey } from "../../redux";
 import styled from "styled-components";
 import logo from "../assets/logo_full_white.png";
 import { Button, TextField, InputAdornment } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 
-function NavBar({value, setValue}) {
+function NavBar() {
+	const dispatch = useDispatch();
+	const searchKey = useSelector((state) => {
+		return state.dashboard.searchKey;
+	});
 	return (
 		<>
-			<NavbarContainer> 
+			<NavbarContainer>
 				<LogoImage src={logo} />
-				<NavBarSearchField value={value} onChange={(e)=>{
-					setValue(e.target.value.toLowerCase())
-				}}
+				<NavBarSearchField
+					value={searchKey}
+					onChange={(e) => {
+						dispatch(setSearchKey(e.target.value.toLowerCase()));
+					}}
 					InputProps={{
 						endAdornment: (
 							<InputAdornment position="end">
@@ -58,11 +66,10 @@ const NavBarSearchField = styled(TextField)`
 	margin: auto 0;
 	margin-left: 10px;
 	width: 30%;
-@media (max-width: 767px) {
+	@media (max-width: 767px) {
 		margin-right: 10px;
 		flex: 2;
 	}
-
 `;
 
 const NavbarSearchIcon = styled(SearchIcon)`
@@ -75,4 +82,3 @@ const NavbarAccent = styled.div`
 `;
 
 export default NavBar;
-
