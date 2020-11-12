@@ -12,6 +12,7 @@ const initialCoursesState = {
 	planning: courseData,
 	enrolled: [],
 	completed: [],
+	completedSet: new Set(),
 	server: [],
 	loading: false,
 	error: "",
@@ -31,6 +32,12 @@ function coursesReducer(state = initialCoursesState, { type, payload }) {
 				return { ...state, [source.droppableId]: newArray };
 			}
 
+			if (destination.droppableId === "completed") {
+				state.completedSet.add(state[source.droppableId][source.index].id);
+			}
+			if (source.droppableId === "completed") {
+				state.completedSet.delete(state.completed[source.index].id);
+			}
 			const newSourceArray = Array.from(state[source.droppableId]);
 			const newDestinationArray = Array.from(
 				state[destination.droppableId]
@@ -58,23 +65,8 @@ function courseMap(course) {
 	let temp = { ...course };
 	temp.tags = [];
 	temp.labels = [];
-	if (temp.courseNumber < 3000) {
-		temp.tags.push({
-			name: "Lower Level",
-			color: "#494949",
-		});
-	} else {
-		temp.tags.push({
-			name: "Upper Level",
-			color: "#E59804",
-		});
-	}
-	temp.tags.push({
-		name: "Prerequisite: Unsatisfied",
-		color: "#FF0000",
-	});
+
 	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
-	temp.name = `${temp.id}: ${temp.name}`;
 	return temp;
 }
 

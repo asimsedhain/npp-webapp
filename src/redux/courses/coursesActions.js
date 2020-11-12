@@ -38,6 +38,7 @@ export const fetchCourse = () => {
 				const data = response.data;
 				if (data && data.length && data.length > 0) {
 					dispatch(fetchCourseSuccess(data));
+					return
 				}
 
 				dispatch(fetchCoursesFailure("No Course Found"));

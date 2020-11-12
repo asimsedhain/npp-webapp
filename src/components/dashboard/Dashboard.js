@@ -97,10 +97,14 @@ function Dashboard() {
 										)}
 									>
 										{courses[listName]
-											.filter((course) =>
-												course.name
-													.toLowerCase()
-													.includes(searchKey)
+											.filter(
+												(course) =>
+													course.name
+														.toLowerCase()
+														.includes(searchKey) ||
+													course.id
+														.toLowerCase()
+														.includes(searchKey)
 											)
 											.map((course, id) => (
 												<DraggableCourseCard
@@ -137,15 +141,15 @@ function Dashboard() {
 	);
 }
 
-function compareCourse(a, b) {
-	if (a.id < b.id) {
-		return -1;
-	}
-	if (a.id > b.id) {
-		return 1;
-	}
-	return 0;
-}
+//function compareCourse(a, b) {
+	//if (a.id < b.id) {
+		//return -1;
+	//}
+	//if (a.id > b.id) {
+		//return 1;
+	//}
+	//return 0;
+//}
 
 function totalCreditsReducer(accumulator, current) {
 	const credits = Math.floor(current.courseNumber / 100) % 10;
@@ -154,10 +158,12 @@ function totalCreditsReducer(accumulator, current) {
 
 function getTotalCredits(list, filterKey) {
 	return list
-		.filter((course) => course.name.toLowerCase().includes(filterKey))
+		.filter(
+			(course) =>
+				course.name.toLowerCase().includes(filterKey) ||
+				course.id.toLowerCase().includes(filterKey)
+		)
 		.reduce(totalCreditsReducer, 0);
 }
-
-
 
 export default Dashboard;

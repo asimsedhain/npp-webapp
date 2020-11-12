@@ -1,10 +1,13 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../../redux";
 import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
 function CourseCard({ course, provided }) {
+	const { completedSet } = useSelector((state) => {
+		return state.courses;
+	});
 	const dispatch = useDispatch();
 	return (
 		<CourseCardContainer
@@ -16,16 +19,26 @@ function CourseCard({ course, provided }) {
 			}}
 		>
 			<CourseCardTagBase>
-				{course.tags &&
-					course.tags.map((tag, id) => (
-						<CourseCardTag key={id} color={tag.color}>
-							{tag.name}
-						</CourseCardTag>
-					))}
+				{course.courseNumber >= 3000 ? (
+					<CourseCardTag color="#E59804">Upper Level</CourseCardTag>
+				) : (
+					<CourseCardTag color="#494949">Lower Level</CourseCardTag>
+				)}
+				{course.prerequisites.reduce((accu, courseId) => {
+					return accu && completedSet.has(courseId);
+				}, true) ? (
+					<CourseCardTag color="#00FF00">
+						Prerequisite: Satisfied
+					</CourseCardTag>
+				) : (
+					<CourseCardTag color="#FF0000">
+						Prerequisite: Unsatisfied
+					</CourseCardTag>
+				)}
 			</CourseCardTagBase>
 
 			<CourseCardTitleBase>
-				<CourseCardTitle>{course.name}</CourseCardTitle>
+				<CourseCardTitle>{`${course.id}: ${course.name}`}</CourseCardTitle>
 			</CourseCardTitleBase>
 			<CourseCardTagBase>
 				{course.labels &&

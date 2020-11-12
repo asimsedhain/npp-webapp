@@ -1,5 +1,5 @@
 import React from "react";
-import {useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import styled from "styled-components";
 import {
@@ -10,14 +10,22 @@ import {
 	CourseCardTitle,
 } from "../dashboard/DraggableCourseCard";
 
-import {closeModal} from "../../redux"
+import { closeModal } from "../../redux";
 
 function CourseModal() {
-	const dispatch = useDispatch()
-	const {isOpen, course} = useSelector((state)=>{return state.modal})
+	const dispatch = useDispatch();
+	const { isOpen, course } = useSelector((state) => {
+		return state.modal;
+	});
+	const {completedSet} =useSelector((state)=>{return state.courses})
 
 	return (
-		<Modal open={isOpen} onClick={()=>{dispatch(closeModal())}}>
+		<Modal
+			open={isOpen}
+			onClick={() => {
+				dispatch(closeModal());
+			}}
+		>
 			{course && (
 				<StyledModalWrapper>
 					<StyledModalBody>
@@ -25,12 +33,26 @@ function CourseModal() {
 							<CourseCardTitle>{course.name}</CourseCardTitle>
 						</CourseCardTitleBase>
 						<CourseCardTagBase>
-							{course.tags &&
-								course.tags.map((tag, id) => (
-									<CourseCardTag key={id} color={tag.color}>
-										{tag.name}
-									</CourseCardTag>
-								))}
+							{course.courseNumber >= 3000 ? (
+								<CourseCardTag color="#E59804">
+									Upper Level
+								</CourseCardTag>
+							) : (
+								<CourseCardTag color="#494949">
+									Lower Level
+								</CourseCardTag>
+							)}
+							{course.prerequisites.reduce((accu, courseId) => {
+								return accu && completedSet.has(courseId);
+							}, true) ? (
+								<CourseCardTag color="#00FF00">
+									Prerequisite: Satisfied
+								</CourseCardTag>
+							) : (
+								<CourseCardTag color="#FF0000">
+									Prerequisite: Unsatisfied
+								</CourseCardTag>
+							)}
 						</CourseCardTagBase>
 						<CourseCardTagBase>
 							{course.labels &&
