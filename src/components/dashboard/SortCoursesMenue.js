@@ -11,7 +11,7 @@ const SortMenuText = styled.div`
 const ListTitleSideButton = styled.div`
     font-weight: bold;
 `;
-  
+
 export default function SortMenue() {
   const [anchorEl, setAnchorEl] = React.useState(null);
 

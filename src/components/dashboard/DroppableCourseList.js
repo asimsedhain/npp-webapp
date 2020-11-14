@@ -47,7 +47,7 @@ const ListTitleSecondary = styled.div`
 	margin-left: auto;
 `;
 
- const DroppableCourseList = ({
+const DroppableCourseList = ({
 	id,
 	children,
 	hideHeader,
@@ -60,8 +60,8 @@ const ListTitleSecondary = styled.div`
 				<ListTitleBase>
 					<ListTitleMain>{id}</ListTitleMain>
 					<ListTitleSecondary>credits: {credits}</ListTitleSecondary>
-					<SortMenue /> 
-					</ListTitleBase>
+					<SortMenue />
+				</ListTitleBase>
 			)}
 			<Droppable droppableId={id}>
 				{(provided, snapshot) => (
@@ -78,5 +78,4 @@ const ListTitleSecondary = styled.div`
 		</CourseListBase>
 	);
 };
-
 export default DroppableCourseList;
