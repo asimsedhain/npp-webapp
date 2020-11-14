@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
+import SortMenue from "./SortCoursesMenue";
 
 const CourseList = styled.div`
 	overflow-y: auto;
@@ -46,11 +47,7 @@ const ListTitleSecondary = styled.div`
 	margin-left: auto;
 `;
 
-const ListTitleSideButton = styled.div`
-	margin-left: 10px;
-`;
-
-const DroppableCourseList = ({
+ const DroppableCourseList = ({
 	id,
 	children,
 	hideHeader,
@@ -63,8 +60,8 @@ const DroppableCourseList = ({
 				<ListTitleBase>
 					<ListTitleMain>{id}</ListTitleMain>
 					<ListTitleSecondary>credits: {credits}</ListTitleSecondary>
-					<ListTitleSideButton>...</ListTitleSideButton>
-				</ListTitleBase>
+					<SortMenue /> 
+					</ListTitleBase>
 			)}
 			<Droppable droppableId={id}>
 				{(provided, snapshot) => (
@@ -81,4 +78,5 @@ const DroppableCourseList = ({
 		</CourseListBase>
 	);
 };
+
 export default DroppableCourseList;
