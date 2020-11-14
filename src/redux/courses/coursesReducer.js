@@ -3,6 +3,10 @@ import {
 	FETCH_COURSES_INIT,
 	FETCH_COURSES_SUCCESS,
 	FETCH_COURSES_FAILURE,
+	SORT_LIST_BY_NAME,
+	SORT_LIST_BY_LEVEL,
+	SORT_LIST_BY_SEMESTER,
+	SORT_LIST_BY_PREREQUISITE,
 } from "./coursesTypes";
 
 import data from "../../components/dashboard/data.json";
@@ -33,7 +37,9 @@ function coursesReducer(state = initialCoursesState, { type, payload }) {
 			}
 
 			if (destination.droppableId === "completed") {
-				state.completedSet.add(state[source.droppableId][source.index].id);
+				state.completedSet.add(
+					state[source.droppableId][source.index].id
+				);
 			}
 			if (source.droppableId === "completed") {
 				state.completedSet.delete(state.completed[source.index].id);
@@ -56,6 +62,20 @@ function coursesReducer(state = initialCoursesState, { type, payload }) {
 			return { ...state, server: payload, loading: false, error: "" };
 		case FETCH_COURSES_FAILURE:
 			return { ...state, server: [], loading: false, error: payload };
+		case SORT_LIST_BY_NAME:
+			let sortedList = [...state[payload]];
+			sortedList.sort(compareCourseByName);
+			return { ...state, [payload]: sortedList };
+		case SORT_LIST_BY_SEMESTER:
+			//TODO
+			return state;
+		case SORT_LIST_BY_LEVEL:
+			sortedList = [...state[payload]];
+			sortedList.sort(compareCourseByLevel);
+			return { ...state, [payload]: sortedList };
+		case SORT_LIST_BY_PREREQUISITE:
+			//TODO
+			return state;
 		default:
 			return state;
 	}
@@ -68,6 +88,24 @@ function courseMap(course) {
 
 	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
 	return temp;
+}
+function compareCourseByName(a, b) {
+	if (a.id < b.id) {
+		return -1;
+	}
+	if (a.id > b.id) {
+		return 1;
+	}
+	return 0;
+}
+function compareCourseByLevel(a, b) {
+	if (a.courseNumber > b.courseNumber) {
+		return -1;
+	}
+	if (a.courseNumber < b.courseNumber) {
+		return 1;
+	}
+	return 0;
 }
 
 export default coursesReducer;

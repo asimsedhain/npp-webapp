@@ -4,12 +4,27 @@ import {
 	FETCH_COURSES_INIT,
 	FETCH_COURSES_SUCCESS,
 	FETCH_COURSES_FAILURE,
+	SORT_LIST_BY_NAME,
+	SORT_LIST_BY_LEVEL,
 } from "./coursesTypes";
 
 export const moveCourse = (source, destination) => {
 	return {
 		type: MOVE_COURSE,
 		payload: { source, destination },
+	};
+};
+
+export const sortListByName = (listName) => {
+	return {
+		type: SORT_LIST_BY_NAME,
+		payload: listName,
+	};
+};
+export const sortListByLevel = (listName) => {
+	return {
+		type: SORT_LIST_BY_LEVEL,
+		payload: listName,
 	};
 };
 
@@ -38,7 +53,7 @@ export const fetchCourse = () => {
 				const data = response.data;
 				if (data && data.length && data.length > 0) {
 					dispatch(fetchCourseSuccess(data));
-					return
+					return;
 				}
 
 				dispatch(fetchCoursesFailure("No Course Found"));
