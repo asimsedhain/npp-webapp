@@ -4,7 +4,21 @@ import { Graph } from "react-d3-graph";
 import { CourseCard } from "./DraggableCourseCard";
 import courseData from "./data";
 
-function GraphView() {
+function GraphView({listState}) {
+
+	//console.log(listState);
+	//console.log(listState.enrolled)
+	console.log("hello");
+	const courses = [].concat(listState.planning, listState.enrolled, listState.completed);
+	// const courseLinks = [];
+	// for (let i = 0; i < courses.length; i++){
+	// 	for (let j = 0; j < courses[i].requirementsTo.length; j++){
+	// 		courseLinks.push({"source": courses[i].id, target: courses[i].requirementsTo[j]})
+	// 	}
+	// }
+
+	// const data ={nodes: courses, links: courseLinks};
+	console.log(courses);
 	return (
 		<StyledDiv>
 		<Graph

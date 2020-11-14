@@ -16,6 +16,7 @@ import GraphView from "./GraphView";
 const graphPageState = "graphPageState";
 const sidePanelPageState = "sidePanelPageState";
 const defaultPageState = "defaultPageState";
+const courseData = data.map(courseMap);
 
 function Dashboard() {
 	// TODO
@@ -31,7 +32,7 @@ function Dashboard() {
 
 	const listNames = ["planning", "enrolled", "completed"];
 	useEffect(() => {
-		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/COSC`)
+		fetch(`${process.env.REACT_APP_BACKEND_URL}/courses/MATH`)
 			.then(async (value) => {
 				return value.json();
 			})
@@ -39,30 +40,8 @@ function Dashboard() {
 				data.sort(compareCourse);
 
 				//Will be removed in the futre
-				data = data.map((course) => {
-					let temp = { ...course };
-					temp.tags = [];
-					temp.labels = [];
-					if (temp.courseNumber < 3000) {
-						temp.tags.push({
-							name: "Lower Level",
-							color: "#494949",
-						});
-					} else {
-						temp.tags.push({
-							name: "Upper Level",
-							color: "#E59804",
-						});
-					}
-					temp.tags.push({
-						name: "Prerequisite: Unsatisfied",
-						color: "#FF0000",
-					});
-					temp.labels.push({ name: "Spring 2021", color: "#46F446" });
-					temp.name = `${temp.id}: ${temp.name}`;
-					return temp;
-				});
 				console.log(data);
+				data = data.map(courseMap);
 				setListStates({ ...listState, server: data });
 			});
 	}, []);
@@ -86,7 +65,7 @@ function Dashboard() {
 			/>
 			{pageState === graphPageState ? (
 				<>
-				<GraphView></GraphView>
+				<GraphView listState></GraphView>
 
 				</>
 			) : (
@@ -193,6 +172,30 @@ function onDragEnd(result, listState, setListStates) {
 		[source.droppableId]: newSourceArray,
 		[destination.droppableId]: newDestinationArray,
 	});
+}
+
+function courseMap(course) {
+	let temp = { ...course };
+	temp.tags = [];
+	temp.labels = [];
+	if (temp.courseNumber < 3000) {
+		temp.tags.push({
+			name: "Lower Level",
+			color: "#494949",
+		});
+	} else {
+		temp.tags.push({
+			name: "Upper Level",
+			color: "#E59804",
+		});
+	}
+	temp.tags.push({
+		name: "Prerequisite: Unsatisfied",
+		color: "#FF0000",
+	});
+	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
+	temp.name = `${temp.id}: ${temp.name}`;
+	return temp;
 }
 
 export default Dashboard;
