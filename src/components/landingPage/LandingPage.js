@@ -1,5 +1,5 @@
 import React from "react";
-import tower from "../assets/tower.jpg";
+import tower from "../assets/tower_low_quality.jpg";
 import logo from "../assets/logo_full_white.png";
 import {LandingPageImage, LogoImage, LogoText, LoginButton} from "./LandingPageComponents"
 
