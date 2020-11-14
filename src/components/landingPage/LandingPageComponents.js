@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "@material-ui/core/Button";
 
 const LandingPageImage = styled.img`
 	position: fixed;
@@ -36,14 +37,18 @@ const LogoText = styled.h1`
 	}
 `;
 
-const LoginButton = styled.button`
-	background-color: #092d74;
+const LoginButton = styled(Button)`
+	background-color: #092d74ee;
+	border-radius: 0px;
 	color: white;
 	font-weight: bold;
 	display: block;
 	font-size: 2rem;
 	padding: 10px 50px;
 	margin: 50px auto;
+	&:hover {
+		background-color: #092d74;
+	}
 `;
 
 export { LandingPageImage, LoginButton, LogoText, LogoImage };
