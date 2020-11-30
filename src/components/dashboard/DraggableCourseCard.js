@@ -11,9 +11,9 @@ function CourseCard({ course, provided }) {
 	const dispatch = useDispatch();
 	return (
 		<CourseCardContainer
-			ref={provided.innerRef}
-			{...provided.draggableProps}
-			{...provided.dragHandleProps}
+			ref={provided && provided.innerRef}
+			{...(provided && provided.draggableProps)}
+			{...(provided && provided.dragHandleProps)}
 			onClick={() => {
 				dispatch(openModal(course));
 			}}
@@ -40,14 +40,15 @@ function CourseCard({ course, provided }) {
 			<CourseCardTitleBase>
 				<CourseCardTitle>{`${course.id}: ${course.name}`}</CourseCardTitle>
 			</CourseCardTitleBase>
-			<CourseCardTagBase>
-				{course.labels &&
-					course.labels.map((label, id) => (
+			{course.labels && course.labels.length > 0 && (
+				<CourseCardTagBase>
+					{course.labels.map((label, id) => (
 						<CourseCardLabel key={id} color={label.color}>
 							{label.name}
 						</CourseCardLabel>
 					))}
-			</CourseCardTagBase>
+				</CourseCardTagBase>
+			)}
 		</CourseCardContainer>
 	);
 }
@@ -113,4 +114,5 @@ export {
 	CourseCardLabel,
 	CourseCardTitleBase,
 	CourseCardTitle,
+	CourseCard,
 };

@@ -7,19 +7,22 @@ import {
 	SORT_LIST_BY_LEVEL,
 	SORT_LIST_BY_SEMESTER,
 	SORT_LIST_BY_PREREQUISITE,
+	FETCH_USER_COURSES_INIT,
+	FETCH_USER_COURSES_FAILURE,
+	FETCH_USER_COURSES_SUCCESS,
 } from "./coursesTypes";
 
-import data from "../../components/dashboard/data.json";
-
-const courseData = data.map(courseMap);
 const initialCoursesState = {
-	planning: courseData,
+	planning: [],
 	enrolled: [],
 	completed: [],
 	completedSet: new Set(),
+	coursesSet: new Set(),
 	server: [],
-	loading: false,
-	error: "",
+	sidePanelLoading: false,
+	sidePanelError: "",
+	userCourseLoading: false,
+	userCourseError: "",
 };
 
 function coursesReducer(state = initialCoursesState, { type, payload }) {
@@ -57,11 +60,53 @@ function coursesReducer(state = initialCoursesState, { type, payload }) {
 				[destination.droppableId]: newDestinationArray,
 			};
 		case FETCH_COURSES_INIT:
-			return { ...state, loading: true, error: "" };
+			return { ...state, sidePanelLoading: true, sidePanelError: "" };
 		case FETCH_COURSES_SUCCESS:
-			return { ...state, server: payload, loading: false, error: "" };
+			const result = payload.filter(course => !state.coursesSet.has(course.id))
+			return {
+				...state,
+				server: result,
+				sidePanelLoading: false,
+				sidePanelError: "",
+			};
 		case FETCH_COURSES_FAILURE:
-			return { ...state, server: [], loading: false, error: payload };
+			return {
+				...state,
+				server: [],
+				sidePanelLoading: false,
+				sidePanelError: payload,
+			};
+		case FETCH_USER_COURSES_INIT:
+			return { ...state, userCourseLoading: true, userCourseError: "" };
+		case FETCH_USER_COURSES_FAILURE:
+			return {
+				...state,
+				userCourseLoading: false,
+				userCourseError: payload,
+			};
+		case FETCH_USER_COURSES_SUCCESS:
+			const [planning, enrolled, completed] = [[], [], []];
+			for (const course of payload) {
+				state.coursesSet.add(course.id)
+				if (course.column.toLowerCase() === "planning") {
+					planning.push(course);
+				}
+				if (course.column.toLowerCase() === "enrolled") {
+					enrolled.push(course);
+				}
+				if (course.column.toLowerCase() === "completed") {
+					state.completedSet.add(course.id);
+					completed.push(course);
+				}
+			}
+			return {
+				...state,
+				planning,
+				enrolled,
+				completed,
+				userCourseError: "",
+				userCourseLoading: false,
+			};
 		case SORT_LIST_BY_NAME:
 			let sortedList = [...state[payload]];
 			sortedList.sort(compareCourseByName);
@@ -81,14 +126,6 @@ function coursesReducer(state = initialCoursesState, { type, payload }) {
 	}
 }
 
-function courseMap(course) {
-	let temp = { ...course };
-	temp.tags = [];
-	temp.labels = [];
-
-	temp.labels.push({ name: "Spring 2021", color: "#46F446" });
-	return temp;
-}
 function compareCourseByName(a, b) {
 	if (a.id < b.id) {
 		return -1;

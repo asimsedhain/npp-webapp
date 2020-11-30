@@ -7,7 +7,7 @@ const DroppableListContainer = styled.div`
 	grid-template-rows: calc(100vh - 55px - 40px);
 	grid-gap: 15px;
 	@media (max-width: 767px) {
-	height: calc(100vh - 55px - 10px);
+		height: calc(100vh - 55px - 10px);
 		grid-gap: 10px;
 		grid-template-rows: calc(100vh - 55px - 10px);
 	}
@@ -30,6 +30,28 @@ const PaddingContainer = styled.div`
 		padding: 5px;
 	}
 	padding-right: ${(props) => props.split && "0px"};
-	
 `;
-export { DroppableListContainer, Container, PaddingContainer };
+
+const InfoContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	height: calc(100vh - 55px - 40px);
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	& div {
+		width: 70px !important;
+		height: 70px !important;
+		color: #092d74;
+	}
+	& h2 {
+		color: white;
+		color: #092d74;
+	}
+	& svg {
+		color: #092d74;
+		width: 70px !important;
+		height: 70px !important;
+	}
+`;
+export { DroppableListContainer, Container, PaddingContainer, InfoContainer };

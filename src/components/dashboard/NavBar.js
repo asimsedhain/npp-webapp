@@ -28,7 +28,11 @@ function NavBar() {
 						),
 					}}
 				/>
-				<LogoutButton>Logout</LogoutButton>
+				<LogoutButton
+					href={`${process.env.REACT_APP_BACKEND_URL}/logout`}
+				>
+					Logout
+				</LogoutButton>
 			</NavbarContainer>
 			<NavbarAccent />
 		</>

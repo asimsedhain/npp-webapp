@@ -1,40 +1,55 @@
-import React from "react";
-import { useSelector} from "react-redux";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {fetchCourses} from "../../redux"
 import styled from "styled-components";
 import { TextField, InputAdornment, CircularProgress } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import ErrorIcon from "@material-ui/icons/Error";
 
 function SidePanel({ children }) {
-	const { loading, error } = useSelector((state) => {
+	const { sidePanelLoading, sidePanelError } = useSelector((state) => {
 		return state.courses;
 	});
+	const dispatch = useDispatch()
+	const [searchKey, setSearchKey] = useState("");
+
 	return (
 		<SidePanelContainer>
 			<SidePanelHeader>Courses Offered</SidePanelHeader>
-			<NavBarSearchField
-				InputProps={{
-					endAdornment: (
-						<InputAdornment position="end">
-							<NavbarSearchIcon />
-						</InputAdornment>
-					),
+			<form
+				onSubmit={() => {
+					console.log(searchKey)
+					dispatch(fetchCourses(searchKey))
 				}}
-			/>
-			{loading || error ? (
-				<InfoContainer>
-					{error ? (
-						<>
-							<ErrorIcon />
-							<h2>{error}</h2>
-						</>
-					) : (
-						<CircularProgress />
-					)}
-				</InfoContainer>
-			) : (
-				children
-			)}
+			>
+				<NavBarSearchField
+					value={searchKey}
+					onChange={(e) => {
+						setSearchKey(e.target.value);
+					}}
+					InputProps={{
+						endAdornment: (
+							<InputAdornment position="end" type="submit">
+								<NavbarSearchIcon />
+							</InputAdornment>
+						),
+					}}
+				/>
+				{sidePanelLoading || sidePanelError ? (
+					<InfoContainer>
+						{sidePanelError ? (
+							<>
+								<ErrorIcon />
+								<h2>{sidePanelError}</h2>
+							</>
+						) : (
+							<CircularProgress />
+						)}
+					</InfoContainer>
+				) : (
+					children
+				)}
+			</form>
 		</SidePanelContainer>
 	);
 }
