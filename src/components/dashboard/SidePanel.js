@@ -17,8 +17,8 @@ function SidePanel({ children }) {
 		<SidePanelContainer>
 			<SidePanelHeader>Courses Offered</SidePanelHeader>
 			<form
-				onSubmit={() => {
-					console.log(searchKey)
+				onSubmit={(e) => {
+					e.preventDefault()
 					dispatch(fetchCourses(searchKey))
 				}}
 			>
