@@ -7,7 +7,7 @@ import {LandingPageImage, LogoImage, LogoText, LoginButton} from "./LandingPageC
 const msClient = {
 	tenantId: '8f671598-d6fe-4bb6-aa89-03fc7126dba1',
 	id: '02d1c5dc-917d-495a-bfe5-fee48aa54867',
-	redirectURI: 'http://localhost:3001/login'
+	redirectURI: 'https://uttyler-deg-vis.herokuapp.com/login'
 }
 const loginURL = `https://login.microsoftonline.com/${msClient.tenantId}/oauth2/v2.0/authorize?client_id=${msClient.id}&response_type=code&redirect_uri=${encodeURI(msClient.redirectURI)}&response_mode=query&scope=openid`;
 
