@@ -2,7 +2,7 @@
 
 Click on the badge to see the live site.
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/15014c1a-14b1-4e6f-a6d3-71c93830797f/deploy-status)](https://uttdegree.netlify.app/)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/15014c1a-14b1-4e6f-a6d3-71c93830797f/deploy-status)](https://uttyler-deg-vis.herokuapp.com/)
 
 
 
